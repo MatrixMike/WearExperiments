@@ -31,6 +31,8 @@ import androidx.wear.input.RemoteInputIntentHelper
 import androidx.wear.input.wearableExtender
 import dev.katiebarnett.wearexperiments.R
 
+fun String.removeFirstLastChar():
+        String = this.substring(1, this.length -1)
 
 @Composable
 fun UserInputScreen(
@@ -39,6 +41,8 @@ fun UserInputScreen(
     val defaultText = stringResource(id = R.string.edit_user_input)
     var userInput by remember { mutableStateOf(defaultText) }
     val inputTextKey = "input_text"
+    val string1 = "Today is cloudy"
+    val string2 = string1.removeFirstLastChar()
 
     val remoteInputs: List<RemoteInput> = listOf(
         RemoteInput.Builder(inputTextKey)
@@ -56,6 +60,7 @@ fun UserInputScreen(
             val results: Bundle = RemoteInput.getResultsFromIntent(data)
             val newInputText: CharSequence? = results.getCharSequence(inputTextKey)
             userInput = newInputText?.toString() ?: ""
+            userInput = userInput.removeFirstLastChar()
         }
     }
 
